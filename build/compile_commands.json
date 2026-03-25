@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/alexandregrosdidier/Desktop/cours/cpp/td_algo_tri/build",
+  "command": "/usr/bin/clang++   -g -std=gnu++17 -arch arm64 -o CMakeFiles/ex01.dir/src/ex1.cpp.o -c /Users/alexandregrosdidier/Desktop/cours/cpp/td_algo_tri/src/ex1.cpp",
+  "file": "/Users/alexandregrosdidier/Desktop/cours/cpp/td_algo_tri/src/ex1.cpp",
+  "output": "CMakeFiles/ex01.dir/src/ex1.cpp.o"
+}
+]
