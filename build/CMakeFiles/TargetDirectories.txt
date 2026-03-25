@@ -1,3 +1,0 @@
-/Users/alexandregrosdidier/Desktop/cours/cpp/td_algo_tri/build/CMakeFiles/ex01.dir
-/Users/alexandregrosdidier/Desktop/cours/cpp/td_algo_tri/build/CMakeFiles/edit_cache.dir
-/Users/alexandregrosdidier/Desktop/cours/cpp/td_algo_tri/build/CMakeFiles/rebuild_cache.dir
