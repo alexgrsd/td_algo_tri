@@ -2,12 +2,19 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include "ScopedTimer.hpp"
 
 void print_vector(const std::vector<int> & vec){
     for (int i : vec) {
         std::cout << i << " ";
     }
     std::cout << std::endl;
+}
+
+std::vector<int> generate_random_vector(size_t const size, int const max = 100) {
+    std::vector<int> vec(size);
+    std::generate(vec.begin(), vec.end(), [&max]() { return std::rand() % max;} );
+    return vec;
 }
 
 void selection_sort(std::vector<int> & vec){
@@ -49,7 +56,11 @@ size_t quick_sort_partition(std::vector<int> & vec, size_t left, size_t right){ 
 void quick_sort(std::vector<int> & vec, size_t const left, size_t const right){
     if (left < right) {
         size_t pivot_index = quick_sort_partition(vec, left, right);
-        quick_sort(vec, left, pivot_index - 1);
+
+        if (pivot_index > left) {
+            quick_sort(vec, left, pivot_index - 1);
+        }
+
         quick_sort(vec, pivot_index + 1, right);
     }
 }
@@ -58,29 +69,21 @@ void quick_sort(std::vector<int> & vec) {
 }
 
 int main() {
-    std::vector<int> tab_selection = {5, 2, 9, 1, 5, 6};
-    std::cout << "Avant le tri : ";
-    print_vector(tab_selection);
-    selection_sort(tab_selection);
-    std::cout << "Après le tri : ";
-    print_vector(tab_selection);
-
-    std::vector<int> tab_bubble = {5, 2, 9, 1, 5, 6};
-    std::cout << "Avant le tri : ";
-    print_vector(tab_bubble);
-    bubble_sort(tab_bubble);
-    std::cout << "Après le tri : ";
-    print_vector(tab_bubble);
-
-    std::vector<int> tab_quick = {};
-    for (int i = 0; i < 10; i++) {
-        tab_quick.push_back(rand() % 100);
+    std::vector<int> vec = generate_random_vector(10000);
+    {
+        std::vector<int> copy_vec = vec;
+        ScopedTimer timer("Selection Sort");
+        selection_sort(copy_vec);
     }
-    std::cout << "Avant le tri : ";
-    print_vector(tab_quick);
-    quick_sort(tab_quick);
-    std::cout << "Après le tri : ";
-    print_vector(tab_quick);
-
+    {
+        std::vector<int> copy_vec = vec;
+        ScopedTimer timer("Bubble Sort");
+        bubble_sort(copy_vec);
+    }
+    {
+        std::vector<int> copy_vec = vec;
+        ScopedTimer timer("Quick Sort");
+        quick_sort(copy_vec);
+    }
     return 0;
 }
