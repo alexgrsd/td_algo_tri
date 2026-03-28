@@ -68,8 +68,42 @@ void quick_sort(std::vector<int> & vec) {
     quick_sort(vec, 0, vec.size() - 1);
 }
 
+int iterative_search(const std::vector<int> & vec,const int number){ // iterative
+    int left = 0, right = vec.size();
+    while (left+1 != right){
+        int middle = (left+right)/2;
+        if (vec[middle] == number) return middle; // on a trouvé le chiffre
+        if (vec[middle] > number) right = middle;
+        if (vec[middle] < number) left = middle;
+    }
+    return -1;
+}
+
+int recursive_search_algo(const std::vector<int> & vec, int number, int left, int right){
+    if (left > right) return -1;
+    int middle = left + (right - left) / 2;
+    if (vec[middle] == number) return middle;
+    if (vec[middle] > number)
+        return recursive_search_algo(vec, number, left, middle - 1);
+    else
+        return recursive_search_algo(vec, number, middle + 1, right);
+}
+
+int recursive_search(const std::vector<int> &vec, const int number){
+    return recursive_search_algo(vec,number,0,vec.size());
+}
+
 int main() {
-    std::vector<int> vec = generate_random_vector(10000);
+    srand(time(NULL));
+    std::vector<int> vec = generate_random_vector(50);
+    std::vector vec_search = generate_random_vector(50);
+    std::sort(vec_search.begin(),vec_search.end());
+    print_vector(vec_search);
+    int search_ite = iterative_search(vec_search, 21);
+    std::cout << "incide trouvé iterativement : " << search_ite << std::endl;
+    int search_rec = recursive_search(vec_search, 21);
+    std::cout << "incide trouvé recursivement : " << search_rec << std::endl;
+    /*
     {
         std::vector<int> copy_vec = vec;
         ScopedTimer timer("Selection Sort");
@@ -85,5 +119,14 @@ int main() {
         ScopedTimer timer("Quick Sort");
         quick_sort(copy_vec);
     }
+    
+    {
+        std::vector<int> copy_vec = vec;
+        ScopedTimer timer("std::Sort");
+        std::sort(copy_vec.begin(),copy_vec.end());
+    }
+        */
+    
+
     return 0;
 }
